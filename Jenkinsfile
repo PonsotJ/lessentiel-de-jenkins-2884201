@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'mcr.microsoft.com/dotnet/sdk:7.0'
-      args '-v /var/jenkins_home/.nuget:/root/.nuget -e DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 -e DOTNET_CLI_TELEMETRY_OPTOUT=1'
+      args '-e DOTNET_CLI_HOME=/tmp -e HOME=/tmp -e DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 -e DOTNET_CLI_TELEMETRY_OPTOUT=1'
       reuseNode true
     }
   }
