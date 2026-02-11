@@ -4,6 +4,7 @@ pipeline {
       image 'mcr.microsoft.com/dotnet/sdk:7.0'
       args '--rm -v jenkins-nuget-cache:/root/.nuget/packages'
     }
+
   }
   stages {
     stage('Checkout') {
@@ -37,21 +38,23 @@ pipeline {
             sh 'dotnet test tests/FunctionalTests --logger "trx;LogFileName=functional-results.trx"'
           }
         }
+
       }
     }
 
     stage('Deployment') {
       steps {
         sh 'dotnet publish eShopOnWeb.sln -o out'
-        archiveArtifacts artifacts: 'out/**', fingerprint: true
+        archiveArtifacts(artifacts: 'out/**', fingerprint: true)
       }
     }
-  }
 
+  }
   post {
     always {
-      junit '**/TestResults/*.trx' || true
+      junit '**/TestResults/*.trx'||true
       echo 'Pipeline eShopOnWeb completed'
     }
+
   }
 }
