@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'mcr.microsoft.com/dotnet/sdk:7.0'
+      args '-v /var/jenkins_home/.nuget:/root/.nuget'
+      reuseNode true
+    }
+  }
   stages {
     stage('Build') {
       steps {
